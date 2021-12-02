@@ -77,6 +77,16 @@ var startGame = function() {
       var pickedEnemyName = enemyNames[i];
       enemyHealth = 50;
       fight(pickedEnemyName);
+      
+      //if we are not at the last enemy in the array
+      if (playerHealth > 0 &&  i < enemyNames.length - 1) {
+        // ask if player want to use the store before next round
+        var storconfirm = window.confirm("The fight is over, visit the store the store before the next round?")
+        // if yes take them to the store() function
+        if (storconfirm) {
+        shop()
+        }
+      }
     }
     else {
       window.alert("You have lost your robot in battle! Game Over!");
@@ -105,6 +115,57 @@ var endGame = function() {
    else {
      window.alert("thank you for playing Robot Gladiators~ Come back soon");
   }
+};
+
+//shop function
+var shop = function() {
+  //ask the player what they'd like to do
+  var shopOptionPrompt = window.prompt(
+    "Would you like to REFILL you health, upgrade your attack, or leave the store? please enter one: 'REFILL', or 'LEAVE' to make a choice."
+  );
+  
+  switch (shopOptionPrompt) {  
+    case "refill":
+    case "REFILL":  
+      if (playerMoney >= 7) {
+        window.alert("Refilling player's health by 20 for 7 dollars.");
+        // increase health and decrease money
+        playerHealth = playerHealth + 20;
+        playerMoney = playerMoney - 7;
+      }
+      else {
+        window.alert("You don't have enough money!")
+      }
+
+      break;
+
+    case "upgrade":
+    case "UPGRADE":  
+      if (playerMoney >= 7) {
+        window.alert("upgrade player's attack by 6 for 7 dollars");
+
+        // increase health and decrease money
+        playerHealth = playerHealth + 20;
+        playerMoney = playerMoney - 7;
+      }
+      else {
+        window.alert("You don't have anough money");
+      }  
+      break;
+
+    case "leave":
+    case "LEAVE":  
+      window.alert("Leaving the store.");
+
+      // do nothing, so function will end
+      break;
+    default:
+      window.alert("You did not pick a valid option. Try again."); 
+
+      // call shop() again to force player to pick a valid option
+      shop();
+      break;
+  }    
 };
 
 startGame();
